@@ -56,6 +56,21 @@ png('Figures/FigureS1.png', width = 86, height = 86, res = 200,  units = 'mm')
 print(p)
 dev.off()
 
+p1 <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10NGENES)) +
+  geom_point(cex = 0.1, alpha = 0.05, color = as.numeric(as.factor(MT$TISSUE)), pch = as.numeric(as.factor(MT$TISSUE))) + xlab(parse(text = expression('log[10](Total~Counts)'))) +
+  geom_smooth(method=lm , color="red", se = FALSE, formula = y ~poly(x,2)) +
+  ylab(parse(text = expression('log[10](Total~Number~of~Genes)'))) +
+  geom_line(aes(y=expGENElwr), color = "red", linetype = "dashed")+
+  geom_line(aes(y=expGENEupr), color = "red", linetype = "dashed")+
+  theme_bw() + 
+  #labs(subtitle = expr_corr_test(MT, x = log10TOTALCOUNT, y = log10NGENES,type = "nonparametric")) +
+  theme(plot.subtitle=element_text(size=5))
+
+png('Figures/FigureS1_Tissue.png', width = 86, height = 86, res = 200,  units = 'mm')
+print(p1)
+dev.off()
+
+
 table(MT$log10NGENES > MT$expGENElwr & MT$log10NGENES < MT$expGENEupr)
 table(MT$log10NGENES > MT$expGENElwr)
 table(MT$log10NGENES < MT$expGENEupr)
