@@ -14,7 +14,7 @@ sampleList <- sampleList[order(sampleList$Cells, decreasing = TRUE),]
 rownames(sampleList) <- NULL
 
 sID <- 47
-downloadedCells <- getSamples(sampleList$SRS[sID])
+downloadedCells <- getSamples(srs = sampleList$SRS[sID])
 downloadedCells <- mergeExperiments(downloadedCells)
 downloadedCells <- NormalizeData(downloadedCells)
 downloadedCells <- ScaleData(downloadedCells)
@@ -26,7 +26,7 @@ downloadedCells <- RunTSNE(downloadedCells, dims = 1:20)
 downloadedCells$CellTypes[!downloadedCells$CellTypes %in% names(table(downloadedCells$CellTypes)[table(downloadedCells$CellTypes) > 100])] <- NA
 
 Idents(downloadedCells) <- downloadedCells$CellTypes
-A <- TSNEPlot(downloadedCells, label = TRUE, repel = TRUE, ) +
+A <- TSNEPlot(downloadedCells, label = TRUE, repel = TRUE) +
   theme_bw() +
   theme(legend.position="none", plot.title = element_text(face = 2)) +
   xlab('t-SNE 1') +
@@ -66,7 +66,7 @@ C <- ggplot(dF, aes(MT, C)) +
 
 
 Idents(downloadedCells) <- downloadedCells$panglaoCluster
-D <- FeaturePlot(downloadedCells, 'mtProportion', order = TRUE, label = TRUE, repel = TRUE) +
+D <- FeaturePlot(downloadedCells, 'mtProportion', reduction = 'tsne', order = TRUE, label = TRUE, repel = TRUE) +
   theme_bw() +
   xlab('t-SNE 1') +
   ylab('t-SNE 2') +
