@@ -81,7 +81,7 @@ E <- plotEnrichment(KEGG$Apoptosis, FC) +
   theme_bw() +
   xlab('Gene rank') +
   ylab('Enrichment Score') +
-  labs(title = 'Apoptosis', subtitle = paste0('5 vs 0 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)), tag = 'E')
+  labs(title = 'Apoptosis', subtitle = paste0('5 vs 1 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)), tag = 'E')
 
 DE <- FindMarkers(downloadedCells, ident.1 = '5', ident.2 = '0', test.use = 'MAST', logfc.threshold = 0)
 FC <- DE$avg_logFC
@@ -93,9 +93,27 @@ F <- plotEnrichment(KEGG$Apoptosis, FC) +
   ylab('Enrichment Score') +
   labs(title = 'Apoptosis', subtitle = paste0('5 vs 0 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)))
 
+DE <- FindMarkers(downloadedCells, ident.1 = '5', ident.2 = '3', test.use = 'MAST', logfc.threshold = 0)
+FC <- DE$avg_logFC
+names(FC) <- toupper(rownames(DE))
+PValue <- fgseaMultilevel(KEGG['Apoptosis'], FC)
+G <- plotEnrichment(KEGG$Apoptosis, FC) +
+  theme_bw() +
+  xlab('Gene rank') +
+  ylab('Enrichment Score') +
+  labs(title = 'Apoptosis', subtitle = paste0('5 vs 3 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)))
+
+DE <- FindMarkers(downloadedCells, ident.1 = '5', ident.2 = '2', test.use = 'MAST', logfc.threshold = 0)
+FC <- DE$avg_logFC
+names(FC) <- toupper(rownames(DE))
+PValue <- fgseaMultilevel(KEGG['Apoptosis'], FC)
+H <- plotEnrichment(KEGG$Apoptosis, FC) +
+  theme_bw() +
+  xlab('Gene rank') +
+  ylab('Enrichment Score') +
+  labs(title = 'Apoptosis', subtitle = paste0('5 vs 2 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)))
+
+
 png('Figures/alveolarMacrophages.png', width = 4000, height = 2800, res = 300)
-layout <- 'AABBCC
-DDDDEE
-DDDDFF'
-A + B + C + D + E + F + plot_layout(design = layout)
+(A + B + C) / (D | (E + F +G + H))
 dev.off()
