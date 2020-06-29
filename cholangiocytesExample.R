@@ -33,13 +33,15 @@ A <- TSNEPlot(downloadedCells, label = TRUE, repel = TRUE) +
   ylab('t-SNE 2') +
   labs(title = 'Cell types', subtitle = sampleList$SRS[sID], tag = 'A')
 
+downloadedCells <- subset(downloadedCells, idents = 'Cholangiocytes')
 Idents(downloadedCells) <- downloadedCells$panglaoCluster
 B <- TSNEPlot(downloadedCells, label = TRUE, repel = TRUE) +
   theme_bw() +
   theme(legend.position="none", plot.title = element_text(face = 2)) +
   xlab('t-SNE 1') +
   ylab('t-SNE 2') +
-  labs(title = 'Cholangiocytes Clusters', subtitle = sampleList$SRS[sID], tag = 'B')
+  labs(title = 'Cholangiocytes Clusters', subtitle = sampleList$SRS[sID], tag = 'B') + 
+  xlim(c(-30,10))
 
 mtCounts <- downloadedCells@assays$RNA@counts[grepl('MT-',rownames(downloadedCells@assays$RNA@counts), ignore.case = TRUE),]
 mtCounts <- colSums(mtCounts)
@@ -62,7 +64,7 @@ C <- ggplot(dF, aes(MT, C)) +
   ylab('Cluster') +
   xlab('Mitochondrial Proportion') +
   labs(title = sampleList$SRS[sID]) +
-  labs(title = 'Mitochondrial proportion', subtitle = paste0('Alveolar macrophages ',sampleList$SRS[sID]), tag = 'C')
+  labs(title = 'Cholangiocytes Mitochondrial proportion', subtitle = paste0(sampleList$SRS[sID]), tag = 'C')
 
 
 Idents(downloadedCells) <- downloadedCells$panglaoCluster
@@ -70,7 +72,7 @@ D <- FeaturePlot(downloadedCells, 'mtProportion', reduction = 'tsne', order = TR
   theme_bw() +
   xlab('t-SNE 1') +
   ylab('t-SNE 2') +
-  labs(title = 'Mitochondrial proportion', subtitle = sampleList$SRS[sID], tag = 'D') +
+  labs(title = 'Cholangiocytes Mitochondrial proportion', subtitle = sampleList$SRS[sID], tag = 'D') +
   theme(plot.title = element_text(face = 2))
 
 DE <- FindMarkers(downloadedCells, ident.1 = '6', ident.2 = '3', test.use = 'MAST', logfc.threshold = 0)
@@ -114,6 +116,6 @@ H <- plotEnrichment(KEGG$Apoptosis, FC) +
   labs(title = 'Apoptosis', subtitle = paste0('6 vs 1 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)))
 
 
-png('cholangiocytes.png', width = 4000, height = 2800, res = 300)
+png('Figures/Cholangiocytes.png', width = 4000, height = 2800, res = 300)
 (A + B + C) / (D | (E + F + G + H))
 dev.off()
