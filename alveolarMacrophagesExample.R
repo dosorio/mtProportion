@@ -33,6 +33,7 @@ A <- TSNEPlot(downloadedCells, label = TRUE, repel = TRUE) +
   ylab('t-SNE 2') +
   labs(title = 'Cell types', subtitle = sampleList$SRS[sID], tag = 'A')
 
+downloadedCells <- subset(downloadedCells, idents = 'Alveolar macrophages')
 Idents(downloadedCells) <- downloadedCells$panglaoCluster
 B <- TSNEPlot(downloadedCells, label = TRUE, repel = TRUE) +
   theme_bw() +
@@ -47,7 +48,6 @@ mtProportion <- mtCounts/colSums(downloadedCells@assays$RNA@counts)
 downloadedCells$mtProportion <- mtProportion
 
 dF <- data.frame(C = downloadedCells$panglaoCluster, MT = downloadedCells$mtProportion)
-dF <- dF[downloadedCells$CellTypes %in% 'Alveolar macrophages',]
 
 cID <- sort(unique(dF$C))
 mtMedian <- sapply(cID, function(X){median(dF$MT[dF$C %in% X])})
@@ -62,7 +62,7 @@ C <- ggplot(dF, aes(MT, C)) +
   ylab('Cluster') +
   xlab('Mitochondrial Proportion') +
   labs(title = sampleList$SRS[sID]) +
-  labs(title = 'Mitochondrial proportion', subtitle = paste0('Alveolar macrophages ',sampleList$SRS[sID]), tag = 'C')
+  labs(title = 'Mitochondrial Proportion', subtitle = paste0('Alveolar macrophages ',sampleList$SRS[sID]), tag = 'C')
 
 
 Idents(downloadedCells) <- downloadedCells$panglaoCluster
@@ -70,7 +70,7 @@ D <- FeaturePlot(downloadedCells, 'mtProportion', reduction = 'tsne', order = TR
   theme_bw() +
   xlab('t-SNE 1') +
   ylab('t-SNE 2') +
-  labs(title = 'Mitochondrial proportion', subtitle = sampleList$SRS[sID], tag = 'D') +
+  labs(title = 'Alveolar Macrophages Mitochondrial Proportion', subtitle = sampleList$SRS[sID], tag = 'D') +
   theme(plot.title = element_text(face = 2))
 
 DE <- FindMarkers(downloadedCells, ident.1 = '5', ident.2 = '1', test.use = 'MAST', logfc.threshold = 0)
@@ -81,7 +81,7 @@ E <- plotEnrichment(KEGG$Apoptosis, FC) +
   theme_bw() +
   xlab('Gene rank') +
   ylab('Enrichment Score') +
-  labs(title = 'Apoptosis', subtitle = paste0('1 vs 5 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)), tag = 'E')
+  labs(title = 'Apoptosis', subtitle = paste0('5 vs 0 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)), tag = 'E')
 
 DE <- FindMarkers(downloadedCells, ident.1 = '5', ident.2 = '0', test.use = 'MAST', logfc.threshold = 0)
 FC <- DE$avg_logFC
@@ -91,9 +91,9 @@ F <- plotEnrichment(KEGG$Apoptosis, FC) +
   theme_bw() +
   xlab('Gene rank') +
   ylab('Enrichment Score') +
-  labs(title = 'Apoptosis', subtitle = paste0('0 vs 5 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)))
+  labs(title = 'Apoptosis', subtitle = paste0('5 vs 0 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)))
 
-png('alveolarMacrophages.png', width = 4000, height = 2800, res = 300)
+png('Figures/alveolarMacrophages.png', width = 4000, height = 2800, res = 300)
 layout <- 'AABBCC
 DDDDEE
 DDDDFF'
