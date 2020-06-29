@@ -65,7 +65,7 @@ C <- ggplot(dF, aes(MT, C)) +
   ylab('Cluster') +
   xlab('Mitochondrial Proportion') +
   labs(title = sampleList$SRS[sID]) +
-  labs(title = 'Mitochondrial Proportion', subtitle = paste0('Cardiomyocytes ',sampleList$SRS[sID]), tag = 'C')
+  labs(title = 'Cardiomyocytes Mitochondrial Proportion', subtitle = paste0(sampleList$SRS[sID]), tag = 'C')
 
 
 Idents(downloadedCells) <- downloadedCells$panglaoCluster
