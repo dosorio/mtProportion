@@ -33,13 +33,16 @@ A <- TSNEPlot(downloadedCells, label = TRUE, repel = TRUE) +
   ylab('t-SNE 2') +
   labs(title = 'Cell types', subtitle = sampleList$SRS[sID], tag = 'A')
 
+downloadedCells <- subset(downloadedCells, idents = 'Cardiomyocytes')
 Idents(downloadedCells) <- downloadedCells$panglaoCluster
 B <- TSNEPlot(downloadedCells, label = TRUE, repel = TRUE) +
   theme_bw() +
   theme(legend.position="none", plot.title = element_text(face = 2)) +
   xlab('t-SNE 1') +
   ylab('t-SNE 2') +
-  labs(title = 'Clusters', subtitle = sampleList$SRS[sID], tag = 'B')
+  labs(title = 'Cardiomyocytes Clusters', subtitle = sampleList$SRS[sID], tag = 'B') + 
+  xlim(c(-45,15)) +
+  ylim(c(-45,15))
 
 mtCounts <- downloadedCells@assays$RNA@counts[grepl('MT-',rownames(downloadedCells@assays$RNA@counts), ignore.case = TRUE),]
 mtCounts <- colSums(mtCounts)
@@ -47,7 +50,7 @@ mtProportion <- mtCounts/colSums(downloadedCells@assays$RNA@counts)
 downloadedCells$mtProportion <- mtProportion
 
 dF <- data.frame(C = downloadedCells$panglaoCluster, MT = downloadedCells$mtProportion)
-dF <- dF[downloadedCells$CellTypes %in% 'Cardiomyocytes',]
+# dF <- dF[downloadedCells$CellTypes %in% 'Cardiomyocytes',]
 
 cID <- sort(unique(dF$C))
 mtMedian <- sapply(cID, function(X){median(dF$MT[dF$C %in% X])})
@@ -62,7 +65,7 @@ C <- ggplot(dF, aes(MT, C)) +
   ylab('Cluster') +
   xlab('Mitochondrial Proportion') +
   labs(title = sampleList$SRS[sID]) +
-  labs(title = 'Mitochondrial proportion', subtitle = paste0('Cardiomyocytes ',sampleList$SRS[sID], tag = 'C'))
+  labs(title = 'Mitochondrial Proportion', subtitle = paste0('Cardiomyocytes ',sampleList$SRS[sID]), tag = 'C')
 
 
 Idents(downloadedCells) <- downloadedCells$panglaoCluster
@@ -70,8 +73,10 @@ D <- FeaturePlot(downloadedCells, 'mtProportion', reduction = 'tsne', order = TR
   theme_bw() +
   xlab('t-SNE 1') +
   ylab('t-SNE 2') +
-  labs(title = 'Mitochondrial proportion', subtitle = sampleList$SRS[sID], tag = 'D') +
-  theme(plot.title = element_text(face = 2))
+  labs(title = 'Cardiomyocytes Mitochondrial Proportion', subtitle = sampleList$SRS[sID], tag = 'D') +
+  theme(plot.title = element_text(face = 2)) + 
+  xlim(c(-45,15)) +
+  ylim(c(-45,15))
 
 DE <- FindMarkers(downloadedCells, ident.1 = '19', ident.2 = '4', test.use = 'MAST', logfc.threshold = 0)
 FC <- DE$avg_logFC
@@ -124,6 +129,6 @@ H <- plotEnrichment(KEGG$Apoptosis, FC) +
   labs(title = 'Apoptosis', subtitle = paste0('7 vs 4 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)))
 
 
-png('Figures/cardiomyocytes.png', width = 4000, height = 2800, res = 300)
+png('Figures/Cardiomyocytes.png', width = 4000, height = 2800, res = 300)
 (A | B | C)/(D | (E + F + G + H))
 dev.off()
