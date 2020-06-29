@@ -124,6 +124,6 @@ H <- plotEnrichment(KEGG$Apoptosis, FC) +
   labs(title = 'Apoptosis', subtitle = paste0('7 vs 4 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)))
 
 
-png('Cardiomyocytes.png', width = 4000, height = 2800, res = 300)
+png('Figures/cardiomyocytes.png', width = 4000, height = 2800, res = 300)
 (A | B | C)/(D | (E + F + G + H))
 dev.off()
