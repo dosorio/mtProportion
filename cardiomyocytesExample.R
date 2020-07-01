@@ -118,16 +118,6 @@ H <- plotEnrichment(KEGG$Apoptosis, FC) +
   ylab('Enrichment Score') +
   labs(title = 'Apoptosis', subtitle = paste0('7 vs 4 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)))
 
-DE <- FindMarkers(downloadedCells, ident.1 = '8', ident.2 = '4', test.use = 'MAST', logfc.threshold = 0)
-FC <- DE$avg_logFC
-names(FC) <- toupper(rownames(DE))
-PValue <- fgseaMultilevel(KEGG['Apoptosis'], FC)
-H <- plotEnrichment(KEGG$Apoptosis, FC) +
-  theme_bw() +
-  xlab('Gene rank') +
-  ylab('Enrichment Score') +
-  labs(title = 'Apoptosis', subtitle = paste0('7 vs 4 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)))
-
 
 png('Figures/Cardiomyocytes.png', width = 4000, height = 2800, res = 300)
 (A | B | C)/(D | (E + F + G + H))
