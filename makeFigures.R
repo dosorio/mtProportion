@@ -11,8 +11,8 @@ fContent <- lapply(fileList, function(X){
 fContent <- fContent[unlist(lapply(fContent, class)) != 'try-error']
 fContent <- do.call(rbind.data.frame, fContent)
 
-#save(fContent, file = 'FileContent.RData')
-#load('FileContent.RData')
+# save(fContent, file = 'FileContent.RData')
+# load('FileContent.RData')
 
 # Number of cells
 nrow(fContent)
@@ -151,6 +151,12 @@ write.csv(round(humanCELLS,3), 'mtProportion_HumanCells.csv')
 C10X$CT <- as.factor(C10X$CT)
 levels(C10X$CT) <- paste0(names(tCT), ' (', tCT, ')')
 
+mCT <- sapply(unique(C10X$CT), function(X){
+  median(C10X$MTRATIO[C10X$CT %in% X])
+})
+names(mCT) <- unique(C10X$CT)
+C10X$CT <- factor(C10X$CT, levels = names(sort(mCT)))
+
 pValues <- sapply(unique(C10X$CT), function(X){
   t.test(C10X[C10X$CT == X,]$MTRATIO, mu = 0.05, alternative = 'less')$p.value
 })
@@ -201,6 +207,13 @@ write.csv(round(mouseCELLS,3), 'mtProportion_mouseCells.csv')
 C10X$CT <- as.factor(C10X$CT)
 levels(C10X$CT) <- paste0(names(tCT), ' (', tCT, ')')
 
+mCT <- sapply(unique(C10X$CT), function(X){
+  median(C10X$MTRATIO[C10X$CT %in% X])
+})
+names(mCT) <- unique(C10X$CT)
+C10X$CT <- factor(C10X$CT, levels = names(sort(mCT)))
+
+
 pValues <- sapply(unique(C10X$CT), function(X){
   t.test(C10X[C10X$CT == X,]$MTRATIO, mu = 0.05, alternative = 'less')$p.value
 })
@@ -244,6 +257,12 @@ write.csv(round(humanTISSUES,3), 'mtProportion_HumanTissues.csv')
 
 C10X$TISSUE <- as.factor(C10X$TISSUE)
 levels(C10X$TISSUE) <- paste0(names(tT), ' (', tT, ')')
+
+mT <- sapply(unique(C10X$TISSUE), function(X){
+  median(C10X$MTRATIO[C10X$TISSUE %in% X])
+})
+names(mT) <- unique(C10X$TISSUE)
+C10X$TISSUE <- factor(C10X$TISSUE, levels = names(sort(mT)))
 
 p <- ggplot(C10X, aes(x=TISSUE, y=MTRATIO)) + 
   geom_boxplot(outlier.shape = NA) + theme_bw() + coord_flip() +
@@ -293,6 +312,13 @@ write.csv(round(mouseTISSUES,3), 'mtProportion_MouseTissues.csv')
 C10X$TISSUE <- as.factor(C10X$TISSUE)
 
 levels(C10X$TISSUE) <- paste0(names(tT), ' (', tT, ')')
+
+mT <- sapply(unique(C10X$TISSUE), function(X){
+  median(C10X$MTRATIO[C10X$TISSUE %in% X])
+})
+names(mT) <- unique(C10X$TISSUE)
+C10X$TISSUE <- factor(C10X$TISSUE, levels = names(sort(mT)))
+
 
 p <- ggplot(C10X, aes(x=TISSUE, y=MTRATIO)) + 
   geom_boxplot(outlier.shape = NA) + theme_bw(base_size = 10) + coord_flip() +
