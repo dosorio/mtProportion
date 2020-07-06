@@ -1,0 +1,28 @@
+,mean Hsa,mean Mmu,CI low,CI high,p-value,p-adj,Hsa > Mmu
+NK cells,0.039,0.007,0.032,0.033,0.000,0.000,TRUE
+T cells,0.040,0.011,0.029,0.029,0.000,0.000,TRUE
+Plasmacytoid dendritic cells,0.032,0.016,0.015,0.018,0.000,0.000,TRUE
+Dendritic cells,0.050,0.007,0.042,0.043,0.000,0.000,TRUE
+Erythroid-like and erythroid precursor cells,0.015,0.005,0.010,0.011,0.000,0.000,TRUE
+B cells,0.043,0.013,0.029,0.030,0.000,0.000,TRUE
+Endothelial cells,0.053,0.020,0.032,0.034,0.000,0.000,TRUE
+Luminal epithelial cells,0.107,0.011,0.090,0.102,0.000,0.000,TRUE
+Keratinocytes,0.090,0.014,0.074,0.077,0.000,0.000,TRUE
+Hepatocytes,0.658,0.210,0.438,0.458,0.000,0.000,TRUE
+Pulmonary alveolar type II cells,0.051,0.022,0.028,0.030,0.000,0.000,TRUE
+Smooth muscle cells,0.080,0.027,0.050,0.055,6.37481898998896e-315,8.60600563747323e-315,TRUE
+Fibroblasts,0.055,0.015,0.039,0.040,0.000,0.000,TRUE
+Germ cells,0.060,0.007,0.052,0.054,0.000,0.000,TRUE
+Macrophages,0.095,0.012,0.080,0.087,0.000,0.000,TRUE
+T memory cells,0.036,0.012,0.024,0.025,0.000,0.000,TRUE
+Goblet cells,0.460,0.026,0.421,0.446,0.000,0.000,TRUE
+Acinar cells,0.047,0.053,-0.011,-0.001,0.028,0.028,FALSE
+Beta cells,0.072,0.039,0.031,0.036,0.000,0.000,TRUE
+Alpha cells,0.064,0.014,0.048,0.051,0.000,0.000,TRUE
+Enteroendocrine cells,0.249,0.098,0.137,0.166,0.000,0.000,TRUE
+Neutrophils,0.062,0.005,0.054,0.058,0.000,0.000,TRUE
+Enterocytes,0.245,0.049,0.187,0.205,0.000,0.000,TRUE
+Embryonic stem cells,0.064,0.018,0.045,0.047,0.000,0.000,TRUE
+Oligodendrocytes,0.011,0.025,-0.015,-0.014,0.000,0.000,FALSE
+Astrocytes,0.007,0.025,-0.018,-0.017,0.000,0.000,FALSE
+Oligodendrocyte progenitor cells,0.011,0.018,-0.008,-0.007,0.000,0.000,FALSE
