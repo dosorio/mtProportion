@@ -31,7 +31,7 @@ A1 <- TSNEPlot(downloadedCells, label = TRUE, repel = TRUE) +
   theme(legend.position="none", plot.title = element_text(face = 2)) +
   xlab('t-SNE 1') +
   ylab('t-SNE 2') +
-  labs(title = 'Cell types', subtitle = sampleList$SRS[sID], tag = 'A1')
+  labs(title = 'Cell types', subtitle = sampleList$SRS[sID], tag = 'A')
 
 downloadedCells <- subset(downloadedCells, idents = 'Cardiomyocytes')
 Idents(downloadedCells) <- downloadedCells$panglaoCluster
@@ -57,7 +57,7 @@ C1 <- ggplot(dF, aes(MT, C)) +
   ylab('Cluster') +
   xlab('Mitochondrial Proportion') +
   labs(title = sampleList$SRS[sID]) +
-  labs(title = 'Cardiomyocytes', subtitle = paste0('Mitochondrial Proportion ', sampleList$SRS[sID]), tag = 'C1')
+  labs(title = 'Cardiomyocytes', subtitle = paste0('Mitochondrial Proportion ', sampleList$SRS[sID]), tag = 'C')
 
 
 Idents(downloadedCells) <- downloadedCells$panglaoCluster
@@ -65,7 +65,7 @@ D1 <- FeaturePlot(downloadedCells, 'mtProportion', reduction = 'tsne', order = T
   theme_bw() +
   xlab('t-SNE 1') +
   ylab('t-SNE 2') +
-  labs(title = 'Cardiomyocytes', subtitle = paste0('Mitochondrial Proportion ', sampleList$SRS[sID]), tag = 'B1') +
+  labs(title = 'Cardiomyocytes', subtitle = paste0('Mitochondrial Proportion ', sampleList$SRS[sID]), tag = 'B') +
   theme(plot.title = element_text(face = 2)) + 
   xlim(c(-45,15)) +
   ylim(c(-45,15))
@@ -78,7 +78,7 @@ E1 <- plotEnrichment(KEGG$Apoptosis, FC) +
   theme_bw() +
   xlab('Gene rank') +
   ylab('Enrichment Score') +
-  labs(title = 'Apoptosis', subtitle = paste0('19 vs 4 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)), tag = 'D1')
+  labs(title = 'Apoptosis', subtitle = paste0('19 vs 4 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)), tag = 'D')
 
 DE <- FindMarkers(downloadedCells, ident.1 = '0', ident.2 = '4', test.use = 'MAST', logfc.threshold = 0)
 FC <- DE$avg_logFC
@@ -129,7 +129,7 @@ A2 <- TSNEPlot(downloadedCells, label = TRUE, repel = TRUE) +
   theme(legend.position="none", plot.title = element_text(face = 2)) +
   xlab('t-SNE 1') +
   ylab('t-SNE 2') +
-  labs(title = 'Cell types', subtitle = sampleList$SRS[sID], tag = 'A2')
+  labs(title = 'Cell types', subtitle = sampleList$SRS[sID])
 
 downloadedCells <- subset(downloadedCells, idents = 'Alveolar macrophages')
 Idents(downloadedCells) <- downloadedCells$panglaoCluster
@@ -154,7 +154,7 @@ C2 <- ggplot(dF, aes(MT, C)) +
   ylab('Cluster') +
   xlab('Mitochondrial Proportion') +
   labs(title = sampleList$SRS[sID]) +
-  labs(title = 'Alveolar macrophages', subtitle = paste0('Mitochondrial Proportion ', sampleList$SRS[sID]), tag = 'C2')
+  labs(title = 'Alveolar macrophages', subtitle = paste0('Mitochondrial Proportion ', sampleList$SRS[sID]))
 
 
 Idents(downloadedCells) <- downloadedCells$panglaoCluster
@@ -162,7 +162,7 @@ D2 <- FeaturePlot(downloadedCells, 'mtProportion', reduction = 'tsne', order = T
   theme_bw() +
   xlab('t-SNE 1') +
   ylab('t-SNE 2') +
-  labs(title = 'Alveolar Macrophages', subtitle = paste0('Mitochondrial Proportion ', sampleList$SRS[sID]), tag = 'B2') +
+  labs(title = 'Alveolar Macrophages', subtitle = paste0('Mitochondrial Proportion ', sampleList$SRS[sID])) +
   theme(plot.title = element_text(face = 2))
 
 DE <- FindMarkers(downloadedCells, ident.1 = '5', ident.2 = '1', test.use = 'MAST', logfc.threshold = 0)
@@ -173,7 +173,7 @@ E2 <- plotEnrichment(KEGG$Apoptosis, FC) +
   theme_bw() +
   xlab('Gene rank') +
   ylab('Enrichment Score') +
-  labs(title = 'Apoptosis', subtitle = paste0('5 vs 1 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)), tag = 'D2')
+  labs(title = 'Apoptosis', subtitle = paste0('5 vs 1 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)))
 
 DE <- FindMarkers(downloadedCells, ident.1 = '5', ident.2 = '0', test.use = 'MAST', logfc.threshold = 0)
 FC <- DE$avg_logFC
@@ -223,7 +223,7 @@ A3 <- TSNEPlot(downloadedCells, label = TRUE, repel = TRUE) +
   theme(legend.position="none", plot.title = element_text(face = 2)) +
   xlab('t-SNE 1') +
   ylab('t-SNE 2') +
-  labs(title = 'Cell types', subtitle = sampleList$SRS[sID], tag = 'A3')
+  labs(title = 'Cell types', subtitle = sampleList$SRS[sID])
 
 downloadedCells <- subset(downloadedCells, idents = 'Endothelial cells')
 Idents(downloadedCells) <- downloadedCells$panglaoCluster
@@ -248,7 +248,7 @@ C3 <- ggplot(dF, aes(MT, C)) +
   ylab('Cluster') +
   xlab('Mitochondrial Proportion') +
   labs(title = sampleList$SRS[sID]) +
-  labs(title = 'Endothelial Cells', subtitle = paste0('Mitochondrial Proportion ', sampleList$SRS[sID]), tag = 'C3')
+  labs(title = 'Endothelial Cells', subtitle = paste0('Mitochondrial Proportion ', sampleList$SRS[sID]))
 
 
 Idents(downloadedCells) <- downloadedCells$panglaoCluster
@@ -256,7 +256,7 @@ D3 <- FeaturePlot(downloadedCells, 'mtProportion', reduction = 'tsne', order = T
   theme_bw() +
   xlab('t-SNE 1') +
   ylab('t-SNE 2') +
-  labs(title = 'Endothelial Cells', subtitle = paste0('Mitochondrial Proportion ', sampleList$SRS[sID]), tag = 'B3') +
+  labs(title = 'Endothelial Cells', subtitle = paste0('Mitochondrial Proportion ', sampleList$SRS[sID])) +
   theme(plot.title = element_text(face = 2))
 
 DE <- FindMarkers(downloadedCells, ident.1 = '11', ident.2 = '2', test.use = 'MAST', logfc.threshold = 0)
@@ -267,7 +267,7 @@ E3 <- plotEnrichment(KEGG$Apoptosis, FC) +
   theme_bw() +
   xlab('Gene rank') +
   ylab('Enrichment Score') +
-  labs(title = 'Apoptosis', subtitle = paste0('11 vs 2 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)), tag = 'D3')
+  labs(title = 'Apoptosis', subtitle = paste0('11 vs 2 | NES = ',round(PValue$NES,2), ' | P = ', formatC(PValue$padj, format = 'e', digits = 2)))
 
 DE <- FindMarkers(downloadedCells, ident.1 = '11', ident.2 = '0', test.use = 'MAST', logfc.threshold = 0)
 FC <- DE$avg_logFC
@@ -301,7 +301,7 @@ H3 <- plotEnrichment(KEGG$Apoptosis, FC) +
 
 
 
-png('Figures/M2.png', width = 6500, height = 1300*3, res = 300)
+png('Figures/nomito-M2.png', width = 6500, height = 1300*3, res = 300)
 layout <- '
 AAABBBCCCDDEE
 AAABBBCCCFFGG
