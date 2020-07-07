@@ -28,8 +28,7 @@ outT <- as.data.frame(outT)
 outT$`p-adj` <- p.adjust(outT$`p-value`, method = 'fdr')
 outT$`Hsa > Mmu` <- outT$`mean Hsa` > outT$`mean Mmu`
 rownames(outT) <- sharedT
-
-write.csv(outT, 'spCT.csv')
+write.csv(outT, 'spTissues.csv')
 
 
 # Shared Cell Types
@@ -56,5 +55,6 @@ outCT$`p-adj` <- p.adjust(outCT$`p-value`, method = 'fdr')
 outCT$`Hsa > Mmu` <- outCT$`mean Hsa` > outCT$`mean Mmu`
 rownames(outCT) <- sharedCT
 outCT <- outCT[complete.cases(outCT),]
+write.csv(outCT, 'spCellTypes.csv')
 
       
