@@ -57,7 +57,7 @@ print(p)
 dev.off()
 
 p1 <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10NGENES)) +
-  geom_point(cex = 0.1, alpha = 0.05, color = as.numeric(as.factor(MT$TISSUE)), pch = as.numeric(as.factor(MT$TISSUE))) + xlab(parse(text = expression('log[10](Total~Counts)'))) +
+  geom_point(cex = 0.1, alpha = 0.05, color = as.numeric(as.factor(MT$TISSUE))) + xlab(parse(text = expression('log[10](Total~Counts)'))) +
   geom_smooth(method=lm , color="red", se = FALSE, formula = y ~poly(x,2)) +
   ylab(parse(text = expression('log[10](Total~Number~of~Genes)'))) +
   geom_line(aes(y=expGENElwr), color = "red", linetype = "dashed")+
@@ -70,6 +70,19 @@ png('Figures/FigureS1_Tissue.png', width = 86, height = 86, res = 200,  units = 
 print(p1)
 dev.off()
 
+p1 <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10NGENES)) +
+  geom_point(cex = 0.1, alpha = 0.05, color = as.numeric(as.factor(MT$CT))) + xlab(parse(text = expression('log[10](Total~Counts)'))) +
+  geom_smooth(method=lm , color="red", se = FALSE, formula = y ~poly(x,2)) +
+  ylab(parse(text = expression('log[10](Total~Number~of~Genes)'))) +
+  geom_line(aes(y=expGENElwr), color = "red", linetype = "dashed")+
+  geom_line(aes(y=expGENEupr), color = "red", linetype = "dashed")+
+  theme_bw() + 
+  #labs(subtitle = expr_corr_test(MT, x = log10TOTALCOUNT, y = log10NGENES,type = "nonparametric")) +
+  theme(plot.subtitle=element_text(size=5))
+
+png('Figures/FigureS1_CellType.png', width = 86, height = 86, res = 200,  units = 'mm')
+print(p1)
+dev.off()
 
 table(MT$log10NGENES > MT$expGENElwr & MT$log10NGENES < MT$expGENEupr)
 table(MT$log10NGENES > MT$expGENElwr)
@@ -96,6 +109,32 @@ p <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10MTCOUNT)) +
   theme(plot.subtitle=element_text(size=5))
 
 png('Figures/Figure1.png', width = 86, height = 86*0.65, res = 200,  units = 'mm')
+print(p)
+dev.off()
+
+p <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10MTCOUNT)) +
+  geom_point(cex = 0.1, alpha = 0.05, color = as.numeric(as.factor(MT$TISSUE))) + geom_smooth(method=lm , color="red", se = FALSE) +
+  theme_bw() + geom_line(aes(y=expMTCOUNTlwr), color = "red", linetype = "dashed")+
+  geom_line(aes(y=expMTCOUNTupr), color = "red", linetype = "dashed")+
+  xlab(parse(text = expression('log[10](Total~Counts)')))+
+  ylab(parse(text = expression('log[10](Mitochondrial~Counts)')))+
+  labs(subtitle = expr_corr_test(MT, x = log10TOTALCOUNT, y = log10MTCOUNT)) +
+  theme(plot.subtitle=element_text(size=5))
+
+png('Figures/Figure1_Tissue.png', width = 86, height = 86*0.65, res = 200,  units = 'mm')
+print(p)
+dev.off()
+
+p <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10MTCOUNT)) +
+  geom_point(cex = 0.1, alpha = 0.05, color = as.numeric(as.factor(MT$CT))) + geom_smooth(method=lm , color="red", se = FALSE) +
+  theme_bw() + geom_line(aes(y=expMTCOUNTlwr), color = "red", linetype = "dashed")+
+  geom_line(aes(y=expMTCOUNTupr), color = "red", linetype = "dashed")+
+  xlab(parse(text = expression('log[10](Total~Counts)')))+
+  ylab(parse(text = expression('log[10](Mitochondrial~Counts)')))+
+  labs(subtitle = expr_corr_test(MT, x = log10TOTALCOUNT, y = log10MTCOUNT)) +
+  theme(plot.subtitle=element_text(size=5))
+
+png('Figures/Figure1_CT.png', width = 86, height = 86*0.65, res = 200,  units = 'mm')
 print(p)
 dev.off()
 
