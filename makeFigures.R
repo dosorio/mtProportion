@@ -135,9 +135,10 @@ p <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10MTCOUNT, color = CT)) +
   xlab(parse(text = expression('log[10](Total~Counts)')))+
   ylab(parse(text = expression('log[10](Mitochondrial~Counts)')))+
   #labs(subtitle = expr_corr_test(MT, x = log10TOTALCOUNT, y = log10MTCOUNT)) +
-  theme(plot.subtitle=element_text(size=5))
+  theme(plot.subtitle=element_text(size=5), legend.title = element_blank()) + 
+  guides(color=guide_legend(ncol=5, override.aes = list(alpha = 1, size=3)))
 
-png('Figures/Figure1_CT.png', width = 86, height = 86*0.65, res = 200,  units = 'mm')
+png('Figures/Figure1_CT.png', width = 4000, height = 1500, res = 200)
 print(p)
 dev.off()
 
