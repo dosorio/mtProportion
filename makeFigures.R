@@ -56,31 +56,33 @@ png('Figures/FigureS1.png', width = 86, height = 86, res = 200,  units = 'mm')
 print(p)
 dev.off()
 
-p1 <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10NGENES)) +
-  geom_point(cex = 0.1, alpha = 0.05, color = as.numeric(as.factor(MT$TISSUE))) + xlab(parse(text = expression('log[10](Total~Counts)'))) +
+p1 <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10NGENES, color = TISSUE)) +
+  geom_point(cex = 0.1, alpha = 0.05) + xlab(parse(text = expression('log[10](Total~Counts)'))) +
   geom_smooth(method=lm , color="red", se = FALSE, formula = y ~poly(x,2)) +
   ylab(parse(text = expression('log[10](Total~Number~of~Genes)'))) +
   geom_line(aes(y=expGENElwr), color = "red", linetype = "dashed")+
   geom_line(aes(y=expGENEupr), color = "red", linetype = "dashed")+
   theme_bw() + 
   #labs(subtitle = expr_corr_test(MT, x = log10TOTALCOUNT, y = log10NGENES,type = "nonparametric")) +
-  theme(plot.subtitle=element_text(size=5))
+  theme(plot.subtitle=element_text(size=5), legend.title = element_blank()) + 
+  guides(color=guide_legend(ncol=6, override.aes = list(alpha = 1, size=3)))
 
-png('Figures/FigureS1_Tissue.png', width = 86, height = 86, res = 200,  units = 'mm')
+png('Figures/FigureS1_Tissue.png', width = 6000, height = 2000, res = 200)
 print(p1)
 dev.off()
 
-p1 <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10NGENES)) +
-  geom_point(cex = 0.1, alpha = 0.05, color = as.numeric(as.factor(MT$CT))) + xlab(parse(text = expression('log[10](Total~Counts)'))) +
+p1 <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10NGENES, color = CT)) +
+  geom_point(cex = 0.1, alpha = 0.05) + xlab(parse(text = expression('log[10](Total~Counts)'))) +
   geom_smooth(method=lm , color="red", se = FALSE, formula = y ~poly(x,2)) +
   ylab(parse(text = expression('log[10](Total~Number~of~Genes)'))) +
   geom_line(aes(y=expGENElwr), color = "red", linetype = "dashed")+
   geom_line(aes(y=expGENEupr), color = "red", linetype = "dashed")+
   theme_bw() + 
   #labs(subtitle = expr_corr_test(MT, x = log10TOTALCOUNT, y = log10NGENES,type = "nonparametric")) +
-  theme(plot.subtitle=element_text(size=5))
+  theme(plot.subtitle=element_text(size=5), legend.title = element_blank()) + 
+  guides(color=guide_legend(ncol=5, override.aes = list(alpha = 1, size=3)))
 
-png('Figures/FigureS1_CellType.png', width = 86, height = 86, res = 200,  units = 'mm')
+png('Figures/FigureS1_CellType.png', width = 4500, height = 1500, res = 200)
 print(p1)
 dev.off()
 
@@ -112,26 +114,27 @@ png('Figures/Figure1.png', width = 86, height = 86*0.65, res = 200,  units = 'mm
 print(p)
 dev.off()
 
-p <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10MTCOUNT)) +
-  geom_point(cex = 0.1, alpha = 0.05, color = as.numeric(as.factor(MT$TISSUE))) + geom_smooth(method=lm , color="red", se = FALSE) +
+p <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10MTCOUNT, color = TISSUE)) +
+  geom_point(cex = 0.1, alpha = 0.05) + geom_smooth(method=lm , color="red", se = FALSE) +
   theme_bw() + geom_line(aes(y=expMTCOUNTlwr), color = "red", linetype = "dashed")+
   geom_line(aes(y=expMTCOUNTupr), color = "red", linetype = "dashed")+
   xlab(parse(text = expression('log[10](Total~Counts)')))+
   ylab(parse(text = expression('log[10](Mitochondrial~Counts)')))+
-  labs(subtitle = expr_corr_test(MT, x = log10TOTALCOUNT, y = log10MTCOUNT)) +
-  theme(plot.subtitle=element_text(size=5))
+  #labs(subtitle = expr_corr_test(MT, x = log10TOTALCOUNT, y = log10MTCOUNT)) +
+  theme(plot.subtitle=element_text(size=5), legend.title = element_blank()) + 
+  guides(color=guide_legend(ncol=6, override.aes = list(alpha = 1, size=3)))
 
-png('Figures/Figure1_Tissue.png', width = 86, height = 86*0.65, res = 200,  units = 'mm')
+png('Figures/Figure1_Tissue.png', width = 6000, height = 2000, res = 200)
 print(p)
 dev.off()
 
-p <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10MTCOUNT)) +
-  geom_point(cex = 0.1, alpha = 0.05, color = as.numeric(as.factor(MT$CT))) + geom_smooth(method=lm , color="red", se = FALSE) +
+p <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10MTCOUNT, color = CT)) +
+  geom_point(cex = 0.1, alpha = 0.05) + geom_smooth(method=lm , color="red", se = FALSE) +
   theme_bw() + geom_line(aes(y=expMTCOUNTlwr), color = "red", linetype = "dashed")+
   geom_line(aes(y=expMTCOUNTupr), color = "red", linetype = "dashed")+
   xlab(parse(text = expression('log[10](Total~Counts)')))+
   ylab(parse(text = expression('log[10](Mitochondrial~Counts)')))+
-  labs(subtitle = expr_corr_test(MT, x = log10TOTALCOUNT, y = log10MTCOUNT)) +
+  #labs(subtitle = expr_corr_test(MT, x = log10TOTALCOUNT, y = log10MTCOUNT)) +
   theme(plot.subtitle=element_text(size=5))
 
 png('Figures/Figure1_CT.png', width = 86, height = 86*0.65, res = 200,  units = 'mm')
