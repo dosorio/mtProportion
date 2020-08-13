@@ -81,7 +81,47 @@ D <- FeaturePlot(downloadedCells, 'mtProportion', reduction = 'tsne', order = TR
 DE <- FindMarkers(downloadedCells, ident.1 = '19', ident.2 = '4', test.use = 'MAST', logfc.threshold = 0)
 FC <- DE$avg_logFC
 names(FC) <- toupper(rownames(DE))
+
+
+#### Power analysis #####
 PValue <- fgseaMultilevel(KEGG['Apoptosis'], FC)
+set.seed(1)
+powerAnalysis <- t(pbapply::pbsapply(seq_len(1000), function(X){
+  sapply(seq(0,6057, 500)[-1], function(B){
+    as.numeric(fgseaMultilevel(KEGG['Apoptosis'], sample(FC, B))$pval)
+  })
+}))
+powerAnalysis <- apply(powerAnalysis,2,as.numeric)
+nGenes <- seq(0,6057, 500)[-1]
+meanP <- -log10(colMeans(powerAnalysis, na.rm = TRUE))
+sdP <- -log10(apply(powerAnalysis,2,function(X){sd(X, na.rm = TRUE)}))
+lbP <- meanP - sdP
+lbP[lbP < 0] <- 0
+ubP <- meanP + sdP
+DF <- data.frame(genes=nGenes, mean = meanP, ub = ubP, lb = lbP)
+colnames(powerAnalysis) <- nGenes
+paDF <- reshape2::melt(powerAnalysis)
+paDF <- paDF[,2:3]
+paDF$value <- -log10(paDF$value)
+colnames(paDF) <- c('nGenes', 'P')
+paDF$nGenes <- as.factor(paDF$nGenes)
+png('Figures/Power.png', width = 1000, height = 750, res = 300)
+# ggplot(DF, aes(genes,mean)) + ylab(expression(-log[10]~P-value)) + xlab('Number of Tested Genes') +
+#   ylim(c(0,5)) + 
+#   geom_point() +
+#   geom_errorbar(mapping = aes(ymin=lb, ymax=ub)) + 
+#   geom_hline(yintercept = -log10(0.05), lty = 2, col = 'red') +
+#   labs(title = 'Apoptosis') +
+#   theme(plot.title = element_text(face = 2)) +
+#   theme_bw()
+ggplot(paDF, mapping = aes(x = nGenes, y = P)) + geom_boxplot(outlier.shape = NA) + geom_jitter(alpha = 0.25, pch = 16, cex = 0.2) + theme_bw() +
+  labs(title = 'Apoptosis') +
+  theme(plot.title = element_text(face = 2)) + 
+  geom_hline(yintercept = -log10(0.05), lty = 2, col = 'red') + ylab(expression(-log[10]~Enrichment~P-value)) + xlab('Number of Tested Genes') + coord_flip()
+dev.off()
+
+
+
 E <- plotEnrichment(KEGG$Apoptosis, FC) +
   theme_bw() +
   xlab('Gene rank') +
