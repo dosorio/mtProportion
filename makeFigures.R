@@ -82,7 +82,22 @@ p1 <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10NGENES, color = CT)) +
   theme(plot.subtitle=element_text(size=5), legend.title = element_blank()) + 
   guides(color=guide_legend(ncol=5, override.aes = list(alpha = 1, size=3)))
 
-png('Figures/FigureS1_CellType.png', width = 4500, height = 1500, res = 200)
+png('Figures/FigureS1_CellType.png', width = 4000, height = 1500, res = 200)
+print(p1)
+dev.off()
+
+p1 <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10NGENES, color = PROTOCOL)) +
+  geom_point(cex = 0.1, alpha = 0.05) + xlab(parse(text = expression('log[10](Total~Counts)'))) +
+  geom_smooth(method=lm , color="red", se = FALSE, formula = y ~poly(x,2)) +
+  ylab(parse(text = expression('log[10](Total~Number~of~Genes)'))) +
+  geom_line(aes(y=expGENElwr), color = "red", linetype = "dashed")+
+  geom_line(aes(y=expGENEupr), color = "red", linetype = "dashed")+
+  theme_bw() + 
+  #labs(subtitle = expr_corr_test(MT, x = log10TOTALCOUNT, y = log10NGENES,type = "nonparametric")) +
+  theme(plot.subtitle=element_text(size=5), legend.title = element_blank()) + 
+  guides(color=guide_legend(ncol=1, override.aes = list(alpha = 1, size=3)))
+
+png('Figures/FigureS1_Technology.png', width = 0.5*2000, height = 0.5*1500, res = 200)
 print(p1)
 dev.off()
 
@@ -111,6 +126,20 @@ p <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10MTCOUNT)) +
   theme(plot.subtitle=element_text(size=5))
 
 png('Figures/Figure1.png', width = 86, height = 86*0.65, res = 200,  units = 'mm')
+print(p)
+dev.off()
+
+p <- ggplot(MT, aes(x=log10TOTALCOUNT, y=log10MTCOUNT, color = PROTOCOL)) +
+  geom_point(cex = 0.1, alpha = 0.05) + geom_smooth(method=lm , color="red", se = FALSE) +
+  theme_bw() + geom_line(aes(y=expMTCOUNTlwr), color = "red", linetype = "dashed")+
+  geom_line(aes(y=expMTCOUNTupr), color = "red", linetype = "dashed")+
+  xlab(parse(text = expression('log[10](Total~Counts)')))+
+  ylab(parse(text = expression('log[10](Mitochondrial~Counts)')))+
+  #labs(subtitle = expr_corr_test(MT, x = log10TOTALCOUNT, y = log10MTCOUNT)) +
+  theme(plot.subtitle=element_text(size=5), legend.title = element_blank()) + 
+  guides(color=guide_legend(ncol=1, override.aes = list(alpha = 1, size=3)))
+
+png('Figures/Figure1_Technology.png', width = 1000, height = 750, res = 200)
 print(p)
 dev.off()
 
